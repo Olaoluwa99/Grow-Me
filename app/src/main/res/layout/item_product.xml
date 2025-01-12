@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="product"
+            type="com.excercise.growme.data.Product" />
+
+        <variable
+            name="viewModel"
+            type="com.excercise.growme.ui.product.ProductsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/product_background"
+        android:padding="@dimen/default_margin">
+
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/text_color"
+            android:contentDescription="@string/product_image"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{product.image}"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ratingValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rating_button_bg"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:text='@{String.valueOf(product.rating.rate)}'
+            android:textColor="@color/text_color"
+            app:drawableStartCompat="@drawable/baseline_star_rate_20"
+            app:layout_constraintBottom_toBottomOf="@+id/productImage"
+            app:layout_constraintEnd_toEndOf="@+id/productImage"
+            tools:text="4.2" />
+
+        <TextView
+            android:id="@+id/productTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:lines="2"
+            android:text="@{product.title}"
+            android:textColor="@color/text_color"
+            app:layout_constraintTop_toBottomOf="@+id/productImage"
+            tools:layout_editor_absoluteX="16dp"
+            tools:text="This is a sample" />
+
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@{product.asFormattedPrice()}"
+            android:textColor="@color/text_color"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/productTitle"
+            tools:text="$198" />
+
+        <TextView
+            android:id="@+id/addToCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cart_button_bg"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:lines="1"
+            android:onClick="@{() -> viewModel.addToCart(product)}"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="Buy"
+            android:ellipsize="end"
+            android:textColor="@color/invert_text_color"
+            app:drawableStartCompat="@drawable/baseline_shopping_cart_20"
+            app:layout_constraintBottom_toBottomOf="@+id/productPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/productPrice" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="container">#2C2929</color>
+    <color name="primary">#FFFFFF</color>
+    <color name="background">#E8E1E0</color>
+
+    <color name="text_color">#FFFFFFFF</color>
+    <color name="invert_text_color">#FF000000</color>
+</resources>
