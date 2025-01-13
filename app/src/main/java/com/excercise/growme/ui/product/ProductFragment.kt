@@ -45,7 +45,7 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        selectedCategoryTag = requireArguments().getString("categoryTag").toString()
+        selectedCategoryTag = requireArguments().getString(Constants.CATEGORY_TAG).toString()
 
         initialization()
 
@@ -114,15 +114,6 @@ class ProductFragment : Fragment() {
                 }
             }
         }
-
-        /*openCategories.setOnClickListener {
-            //findNavController().navigate(R.id.action_categoriesFragment_to_productsFragment)
-
-            findNavController().navigate(R.id.action_categoryFragment_to_productFragment, Bundle().apply {
-                putString("categoryTag", "")
-            })
-        }*/
-
     }
 
     private fun initialization(){

@@ -2,6 +2,40 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.GrowMe" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorOnPrimary">#402B28</item>
+        <item name="colorPrimaryContainer">#EECDC8</item>
+        <item name="colorOnPrimaryContainer">#503A37</item>
+        <item name="colorSecondary">#D4C3C0</item>
+        <item name="colorOnSecondary">#392E2C</item>
+        <item name="colorSecondaryContainer">#463B39</item>
+        <item name="colorOnSecondaryContainer">#DFCDCA</item>
+        <item name="colorTertiary">#FFFFFF</item>
+        <item name="colorOnTertiary">#36301D</item>
+        <item name="colorTertiaryContainer">#DED4B8</item>
+        <item name="colorOnTertiaryContainer">#453F2B</item>
+        <item name="colorError">#FFB4AB</item>
+        <item name="colorOnError">#690005</item>
+        <item name="colorErrorContainer">#93000A</item>
+        <item name="colorOnErrorContainer">#FFDAD6</item>
+        <item name="android:colorBackground">#151312</item>
+        <item name="colorOnBackground">#E8E1E0</item>
+        <item name="colorSurface">#151312</item>
+        <item name="colorOnSurface">#E8E1E0</item>
+        <item name="colorSurfaceVariant">#4F4443</item>
+        <item name="colorOnSurfaceVariant">#D3C3C1</item>
+        <item name="colorOutline">#9C8E8B</item>
+        <item name="colorOutlineVariant">#4F4443</item>
+        <!--<item name="colorScrim">#000000</item>
+        <item name="colorInverseSurface">#E8E1E0</item>
+        <item name="colorInverseOnSurface">#33302F</item>
+        <item name="colorInversePrimary">#725855</item>-->
+        <item name="colorSurfaceDim">#151312</item>
+        <item name="colorSurfaceBright">#3C3838</item>
+        <item name="colorSurfaceContainerLowest">#100E0D</item>
+        <item name="colorSurfaceContainerLow">#1E1B1B</item>
+        <item name="colorSurfaceContainer">#221F1F</item>
+        <item name="colorSurfaceContainerHigh">#2C2929</item>
+        <item name="colorSurfaceContainerHighest">#373433</item>
     </style>
 </resources>

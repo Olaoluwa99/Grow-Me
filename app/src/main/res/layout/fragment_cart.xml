@@ -6,7 +6,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
+        android:background="?attr/android:colorBackground"
         android:padding="@dimen/small_margin"
         tools:context=".ui.cart.CartFragment">
 
@@ -45,7 +45,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary"
+                android:backgroundTint="?attr/colorPrimary"
                 android:fontFamily="@font/poppins_bold"
                 android:text="CHECKOUT"
                 android:paddingVertical="@dimen/default_margin"
