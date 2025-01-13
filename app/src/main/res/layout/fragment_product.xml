@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background"
-        android:padding="8.dp"
+        android:padding="@dimen/small_margin"
         tools:context=".ui.product.ProductFragment">
 
         <androidx.recyclerview.widget.RecyclerView

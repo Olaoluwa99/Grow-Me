@@ -13,22 +13,28 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.excercise.growme.databinding.FragmentCartBinding
 import com.excercise.growme.constants.Constants
+import com.excercise.growme.data.CartProduct
+import com.excercise.growme.model.SpacingItemDecorator
+import com.excercise.growme.ui.product.ProductAdapter
 import kotlinx.coroutines.launch
 
 class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var openCategories: Button
-    private lateinit var openProducts: Button
-    private lateinit var mainText: TextView
-
     private lateinit var loadingText: TextView
     private lateinit var loadingProgress: ProgressBar
 
+    private lateinit var recyclerView: RecyclerView
+
     private val cartViewModel: CartViewModel by activityViewModels()
+    private lateinit var adapter: CartAdapter
+    var productsList = listOf<CartProduct>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,19 +78,41 @@ class CartFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 cartViewModel.products.collect { cartProducts ->
-                    when (cartProducts.isEmpty()){
+                    productsList = cartProducts
+                    when (productsList.isEmpty()){
                         false -> {
-                            println(cartProducts)
-                            mainText.text = cartProducts.toString()
+                            println(productsList)
+                            //mainText.text = cartProducts.toString()
 
-                            openProducts.setOnClickListener {
-                                cartViewModel.removeFromCart(cartProducts[0])
-                            }
+                            //
+                            adapter = CartAdapter(productsList, cartViewModel)
+                            recyclerView.layoutManager = LinearLayoutManager(context)
+                            recyclerView.adapter = adapter
+
+                            val x = (resources.displayMetrics.density * 4).toInt() //converting dp to pixels
+                            recyclerView.addItemDecoration(SpacingItemDecorator(x)) //setting space between items in RecyclerView
+
+                            //
+                            //adapter.updateList(productsList)
                         }
                         true -> {
-                            mainText.text = "Loading..."
-                            openProducts.setOnClickListener { Toast.makeText(context, "It is Empty", Toast.LENGTH_SHORT).show() }
+                            //mainText.text = "Loading..."
+                            //openProducts.setOnClickListener { Toast.makeText(context, "It is Empty", Toast.LENGTH_SHORT).show() }
                         }
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                cartViewModel.updateStatus.collect { status ->
+                    // Handle the update status value here
+                    when (status) {
+                        Constants.SUCCESS -> {
+                            adapter.updateList(productsList)
+                        }
+                        else -> { /**/ }
                     }
                 }
             }
@@ -92,11 +120,9 @@ class CartFragment : Fragment() {
     }
 
     private fun initialization(){
-        openCategories = binding.openProducts
-        openProducts = binding.openProducts
-        mainText = binding.text
         loadingText = binding.progressText
         loadingProgress = binding.progressBar
+        recyclerView = binding.recyclerView
     }
 
     override fun onDestroyView() {

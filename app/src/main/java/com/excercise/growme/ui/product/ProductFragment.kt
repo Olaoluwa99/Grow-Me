@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.excercise.growme.R
 import com.excercise.growme.databinding.FragmentProductBinding
 import com.excercise.growme.constants.Constants
+import com.excercise.growme.model.SpacingItemDecorator
 import kotlinx.coroutines.launch
 
 class ProductFragment : Fragment() {
@@ -103,7 +104,8 @@ class ProductFragment : Fragment() {
                             val x = (resources.displayMetrics.density * 4).toInt() //converting dp to pixels
                             recyclerView.addItemDecoration(SpacingItemDecorator(x)) //setting space between items in RecyclerView
 
-
+                            //
+                            adapter.updateList(products)
                             //
                             //openCart.setOnClickListener { productsViewModel.addToCart(products[0]) }
                         }

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="product"
+            type="com.excercise.growme.data.CartProduct" />
+
+        <variable
+            name="viewModel"
+            type="com.excercise.growme.ui.cart.CartViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/product_background"
+        android:padding="@dimen/small_margin">
+
+
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:background="@drawable/image_bg"
+            android:contentDescription="@string/product_image"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{product.image}"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/productTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:lines="2"
+            android:text="@{product.title}"
+            android:textColor="@color/text_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/productImage"
+            app:layout_constraintTop_toTopOf="@+id/productImage"
+            tools:text="This is a sample" />
+
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@{product.asFormattedPrice()}"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/productTitle"
+            app:layout_constraintTop_toBottomOf="@+id/productTitle"
+            tools:text="$198" />
+
+        <TextView
+            android:id="@+id/productQuantityAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:lines="1"
+            android:onClick="@{() -> product.increaseQuantity()}"
+            android:textColor="@color/text_color"
+            app:layout_constraintStart_toEndOf="@+id/productImage"
+            app:layout_constraintStart_toStartOf="@+id/productPrice"
+            app:layout_constraintTop_toBottomOf="@+id/productPrice"
+            android:text="@string/add" />
+
+        <TextView
+            android:id="@+id/productQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:lines="1"
+            android:text="@{product.asFormattedQuantity()}"
+            android:layout_marginStart="@dimen/small_margin"
+            android:textColor="@color/text_color"
+            app:layout_constraintStart_toEndOf="@+id/productQuantityAdd"
+            app:layout_constraintTop_toTopOf="@+id/productQuantityAdd"
+            tools:text=" 5 " />
+
+        <TextView
+            android:id="@+id/productQuantitySubtract"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:lines="1"
+            android:layout_marginStart="@dimen/small_margin"
+            android:textColor="@color/text_color"
+            app:layout_constraintStart_toEndOf="@+id/productQuantity"
+            app:layout_constraintTop_toTopOf="@+id/productQuantityAdd"
+            android:text="@string/subtract" />
+
+        <TextView
+            android:id="@+id/productTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@{product.asTotalPrice()}"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/productQuantityAdd"
+            app:layout_constraintTop_toBottomOf="@+id/productQuantityAdd"
+            tools:text="Total = $198" />
+
+        <TextView
+            android:id="@+id/removeFromCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:background="@drawable/cart_button_bg"
+            android:drawablePadding="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="center"
+            android:lines="1"
+            android:onClick="@{() -> viewModel.removeFromCart(product)}"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:text="Remove from Cart"
+            android:textColor="@color/invert_text_color"
+            app:drawableStartCompat="@drawable/baseline_shopping_cart_16"
+            app:layout_constraintStart_toStartOf="@+id/productTotal"
+            app:layout_constraintTop_toBottomOf="@+id/productTotal" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
