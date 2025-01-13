@@ -3,6 +3,7 @@ package com.excercise.growme.ui.product
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.excercise.growme.constants.Constants
+import com.excercise.growme.data.CartProduct
 import com.excercise.growme.data.Product
 import com.excercise.growme.data.toCartProduct
 import com.excercise.growme.database.CartRepository
@@ -17,12 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductsViewModel@Inject constructor(private val repository: ProductRepository, private val cartRepository: CartRepository): ViewModel() {
 
-    //
-    private val _updateStatus = MutableStateFlow(Constants.INACTIVE)
-    var updateStatus = _updateStatus.asStateFlow()
-
-    /*private val _categoryProducts = MutableStateFlow(emptyList<Product>())
-    var categoryProducts = _categoryProducts.asStateFlow()*/
+    private val _addToCartStatus = MutableStateFlow(Constants.INACTIVE)
+    var addToCartStatus = _addToCartStatus.asStateFlow()
 
     private val _categoryProducts = MutableStateFlow<List<Product>>(emptyList())
     val categoryProducts: StateFlow<List<Product>> = _categoryProducts
@@ -30,8 +27,12 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     val products: StateFlow<List<Product>> = _products
 
+    private val _cartProducts = MutableStateFlow<List<CartProduct>>(emptyList())
+    val cartProducts: StateFlow<List<CartProduct>> = _cartProducts
+
     init {
         fetchProducts()
+        fetchCartProducts()
         refreshProducts()
     }
 
@@ -41,7 +42,18 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
                 val data = repository.getProducts()
                 _products.value = data
             } catch (e: Exception) {
-                // Handle exception
+                println(e.message)
+            }
+        }
+    }
+
+    private fun fetchCartProducts() {
+        viewModelScope.launch {
+            try {
+                val data = cartRepository.getCartProducts()
+                _cartProducts.value = data
+            } catch (e: Exception) {
+                println(e.message)
             }
         }
     }
@@ -52,7 +64,7 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
                 repository.refreshProductsFromApi()
                 _products.value = repository.getProducts()
             } catch (e: Exception) {
-                // Handle exception
+                println(e.message)
             }
         }
     }
@@ -76,14 +88,25 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
     }
 
     fun addToCart(product: Product){
-        _updateStatus.value = Constants.LOADING
-        viewModelScope.launch {
-            try {
-                cartRepository.addToCart(product.toCartProduct())
-                _updateStatus.value = Constants.SUCCESS
-            } catch (e: Exception) {
-                _updateStatus.value = Constants.FAILURE
+        _addToCartStatus.value = Constants.LOADING
+        if (cartProducts.value.contains(product.toCartProduct())){
+            _addToCartStatus.value = Constants.DUPLICATE
+        }else{
+            val mutableCartProduct: MutableList<CartProduct> = cartProducts.value.toMutableList()
+            viewModelScope.launch {
+                try {
+                    cartRepository.addToCart(product.toCartProduct())
+                    mutableCartProduct.add(product.toCartProduct())
+                    _cartProducts.value = mutableCartProduct
+                    _addToCartStatus.value = Constants.SUCCESS
+                } catch (e: Exception) {
+                    _addToCartStatus.value = Constants.FAILURE
+                }
             }
         }
+    }
+
+    fun resetCartStatus(){
+        _addToCartStatus.value = Constants.INACTIVE
     }
 }

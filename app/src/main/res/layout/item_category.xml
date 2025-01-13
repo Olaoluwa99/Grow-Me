@@ -63,7 +63,7 @@
             android:layout_marginTop="@dimen/default_margin"
             android:layout_marginBottom="60dp"
             android:fontFamily="@font/poppins_semi_bold"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:lines="1"
             android:text="@{category.title}"
             android:textColor="@color/text_color"

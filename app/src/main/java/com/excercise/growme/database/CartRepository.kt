@@ -21,4 +21,8 @@ class CartRepository @Inject constructor(
     suspend fun removeFromCart(productId: Int) {
         cartDao.removeFromCart(productId)
     }
+
+    suspend fun clearCart() {
+        cartDao.clearCart()
+    }
 }

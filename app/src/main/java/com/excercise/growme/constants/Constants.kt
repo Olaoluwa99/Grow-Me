@@ -8,6 +8,8 @@ object Constants {
     const val SUCCESS = "SUCCESS"
     const val FAILURE = "FAILURE"
 
+    const val DUPLICATE = "DUPLICATE"
+
     const val MENS_CLOTHING = "men's clothing"
     const val WOMENS_CLOTHING = "women's clothing"
     const val JEWELERY = "jewelery"

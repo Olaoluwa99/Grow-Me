@@ -75,15 +75,14 @@
             android:id="@+id/productQuantityAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
             android:fontFamily="@font/poppins_semi_bold"
             android:textSize="18sp"
             android:lines="1"
-            android:onClick="@{() -> product.increaseQuantity()}"
+            android:onClick="@{() -> viewModel.increaseItemQuantity(product)}"
             android:textColor="?attr/colorPrimary"
-            app:layout_constraintStart_toEndOf="@+id/productImageCard"
-            app:layout_constraintStart_toStartOf="@+id/productPrice"
-            app:layout_constraintTop_toBottomOf="@+id/productPrice"
+            android:layout_marginStart="@dimen/small_margin"
+            app:layout_constraintStart_toEndOf="@+id/productQuantity"
+            app:layout_constraintTop_toTopOf="@+id/productQuantitySubtract"
             android:text="@string/add" />
 
         <TextView
@@ -96,8 +95,8 @@
             android:textSize="18sp"
             android:layout_marginStart="@dimen/small_margin"
             android:textColor="@color/text_color"
-            app:layout_constraintStart_toEndOf="@+id/productQuantityAdd"
-            app:layout_constraintTop_toTopOf="@+id/productQuantityAdd"
+            app:layout_constraintStart_toEndOf="@+id/productQuantitySubtract"
+            app:layout_constraintTop_toTopOf="@+id/productQuantitySubtract"
             tools:text=" 5 " />
 
         <TextView
@@ -106,11 +105,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
             android:lines="1"
-            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:onClick="@{() -> viewModel.decreaseItemQuantity(product)}"
             android:textColor="?attr/colorPrimary"
             android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/productQuantity"
-            app:layout_constraintTop_toTopOf="@+id/productQuantityAdd"
+            app:layout_constraintStart_toEndOf="@+id/productImageCard"
+            app:layout_constraintStart_toStartOf="@+id/productPrice"
+            app:layout_constraintTop_toBottomOf="@+id/productPrice"
             android:text="@string/subtract" />
 
         <TextView
@@ -124,30 +125,9 @@
             android:textColor="@color/text_color"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/productImageCard"
-            app:layout_constraintStart_toStartOf="@+id/productQuantityAdd"
-            app:layout_constraintTop_toBottomOf="@+id/productQuantityAdd"
+            app:layout_constraintStart_toStartOf="@+id/productQuantitySubtract"
+            app:layout_constraintTop_toBottomOf="@+id/productQuantitySubtract"
             tools:text="Total = $198" />
-
-        <!--<TextView
-            android:id="@+id/removeFromCart"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:background="@drawable/cart_button_bg"
-            android:drawablePadding="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/poppins_semi_bold"
-            android:gravity="center"
-            android:lines="1"
-            android:onClick="@{() -> viewModel.removeFromCart(product)}"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
-            android:text="Remove from Cart"
-            android:textColor="@color/invert_text_color"
-            app:drawableStartCompat="@drawable/baseline_shopping_cart_16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/productTotal"
-            app:layout_constraintTop_toBottomOf="@+id/productTotal" />-->
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/removeButton"
@@ -155,7 +135,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorPrimary"
             android:onClick="@{() -> viewModel.removeFromCart(product)}"
-            app:cardCornerRadius="36dp"
+            app:cardCornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="@+id/productTotal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/productTotal">
