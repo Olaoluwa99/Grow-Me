@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="category"
+            type="com.excercise.growme.data.Category" />
+
+        <variable
+            name="clickListener"
+            type="com.excercise.growme.ui.category.OnCategoryClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cart_button_bg"
+        android:onClick="@{() -> clickListener.onCategoryClicked(category)}">
+
+        <ImageView
+            android:id="@+id/categoryImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="60dp"
+            app:imageDrawable="@{category.imageId}"
+            tools:src="@drawable/baseline_shopping_cart_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/categoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="60dp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:textSize="18sp"
+            android:lines="1"
+            android:text="@{category.title}"
+            android:textColor="@color/invert_text_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/categoryImage"
+            app:layout_constraintStart_toStartOf="@+id/categoryImage"
+            app:layout_constraintTop_toBottomOf="@+id/categoryImage"
+            tools:text="Men's clothings" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

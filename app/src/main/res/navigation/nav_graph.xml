@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.excercise.growme.ui.category.CategoryFragment"
-        android:label="fragment_category"
+        android:label="Categories"
         tools:layout="@layout/fragment_category" >
         <action
             android:id="@+id/action_categoryFragment_to_productFragment"
@@ -16,11 +16,11 @@
     <fragment
         android:id="@+id/productFragment"
         android:name="com.excercise.growme.ui.product.ProductFragment"
-        android:label="fragment_product"
+        android:label="Products"
         tools:layout="@layout/fragment_product" />
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.excercise.growme.ui.cart.CartFragment"
-        android:label="fragment_cart"
+        android:label="Cart"
         tools:layout="@layout/fragment_cart" />
 </navigation>

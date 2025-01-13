@@ -12,8 +12,24 @@ data class CartProduct(
     val category: String,
     val image: String,
     val rating: CartRating,
-    val quantity: Int
-)
+    var quantity: Int
+){
+    fun asFormattedPrice(): String{
+        return "$$price"
+    }
+
+    fun asTotalPrice(): String{
+        return "Total = $${price * quantity}"
+    }
+
+    fun asFormattedQuantity(): String{
+        return "$quantity"
+    }
+
+    fun increaseQuantity(){
+        quantity += quantity
+    }
+}
 
 data class CartRating(
     val rate: Double,

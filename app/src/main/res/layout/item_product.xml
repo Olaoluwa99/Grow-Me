@@ -18,13 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/product_background"
-        android:padding="@dimen/default_margin">
+        android:padding="@dimen/small_margin">
 
         <ImageView
             android:id="@+id/productImage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/text_color"
+            android:background="@drawable/image_bg"
             android:contentDescription="@string/product_image"
             android:scaleType="centerCrop"
             app:imageUrl="@{product.image}"
@@ -37,8 +37,8 @@
             android:id="@+id/ratingValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/rating_button_bg"
             android:fontFamily="@font/poppins_semi_bold"
             android:paddingHorizontal="8dp"
@@ -47,7 +47,7 @@
             android:textAlignment="center"
             android:text='@{String.valueOf(product.rating.rate)}'
             android:textColor="@color/text_color"
-            app:drawableStartCompat="@drawable/baseline_star_rate_20"
+            app:drawableStartCompat="@drawable/baseline_star_rate_16"
             app:layout_constraintBottom_toBottomOf="@+id/productImage"
             app:layout_constraintEnd_toEndOf="@+id/productImage"
             tools:text="4.2" />
@@ -56,7 +56,7 @@
             android:id="@+id/productTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/small_margin"
             android:fontFamily="@font/poppins_semi_bold"
             android:lines="2"
             android:text="@{product.title}"
@@ -69,11 +69,11 @@
             android:id="@+id/productPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/small_margin"
             android:fontFamily="@font/poppins_bold"
             android:text="@{product.asFormattedPrice()}"
             android:textColor="@color/text_color"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/productTitle"
             tools:text="$198" />
@@ -87,12 +87,12 @@
             android:fontFamily="@font/poppins_semi_bold"
             android:lines="1"
             android:onClick="@{() -> viewModel.addToCart(product)}"
-            android:paddingHorizontal="12dp"
+            android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:text="Buy"
             android:ellipsize="end"
             android:textColor="@color/invert_text_color"
-            app:drawableStartCompat="@drawable/baseline_shopping_cart_20"
+            app:drawableStartCompat="@drawable/baseline_shopping_cart_16"
             app:layout_constraintBottom_toBottomOf="@+id/productPrice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/productPrice" />
