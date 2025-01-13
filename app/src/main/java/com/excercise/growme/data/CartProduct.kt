@@ -23,7 +23,7 @@ data class CartProduct(
     }
 
     fun asFormattedQuantity(): String{
-        return "$quantity"
+        return "  $quantity  "
     }
 
     fun increaseQuantity(){

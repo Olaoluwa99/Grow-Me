@@ -2,7 +2,40 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.GrowMe" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#725855</item>
+        <item name="colorPrimaryContainer">#FFDFDA</item>
+        <item name="colorOnPrimaryContainer">#5C4541</item>
+        <item name="colorSecondary">#685B59</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#F5E2DF</item>
+        <item name="colorOnSecondaryContainer">#534746</item>
+        <item name="colorTertiary">#655E48</item>
+        <item name="colorOnTertiary">#FFFFFF</item>
+        <item name="colorTertiaryContainer">#F1E6CA</item>
+        <item name="colorOnTertiaryContainer">#514A35</item>
+        <item name="colorError">#BA1A1A</item>
+        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorErrorContainer">#FFDAD6</item>
+        <item name="colorOnErrorContainer">#410002</item>
+        <item name="android:colorBackground">#FFF8F7</item>
+        <item name="colorOnBackground">#1E1B1B</item>
+        <item name="colorSurface">#FFF8F7</item>
+        <item name="colorOnSurface">#1E1B1B</item>
+        <item name="colorSurfaceVariant">#F0DFDC</item>
+        <item name="colorOnSurfaceVariant">#4F4443</item>
+        <item name="colorOutline">#817472</item>
+        <item name="colorOutlineVariant">#D3C3C1</item>
+        <!--<item name="colorScrim">#000000</item>
+        <item name="colorInverseSurface">#33302F</item>
+        <item name="colorInverseOnSurface">#F6EFEE</item>
+        <item name="colorInversePrimary">#E0BFBA</item>-->
+        <item name="colorSurfaceDim">#DFD8D7</item>
+        <item name="colorSurfaceBright">#FFF8F7</item>
+        <item name="colorSurfaceContainerLowest">#FFFFFF</item>
+        <item name="colorSurfaceContainerLow">#F9F2F1</item>
+        <item name="colorSurfaceContainer">#F4ECEB</item>
+        <item name="colorSurfaceContainerHigh">#EEE7E5</item>
+        <item name="colorSurfaceContainerHighest">#E8E1E0</item>
     </style>
 
     <style name="Theme.GrowMe" parent="Base.Theme.GrowMe" />

@@ -59,9 +59,17 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
 
     fun setupProductsForCategory(tag: String){
         val list = mutableListOf<Product>()
-        for (item in products.value){
-            if (item.category == tag){
-                list.add(item)
+        if (tag != Constants.OTHERS){
+            for (item in products.value){
+                if (item.category == tag){
+                    list.add(item)
+                }
+            }
+        }else{
+            for (item in products.value){
+                if (item.category != Constants.MENS_CLOTHING && item.category != Constants.WOMENS_CLOTHING && item.category != Constants.JEWELERY && item.category != Constants.ELECTRONICS){
+                    list.add(item)
+                }
             }
         }
         _categoryProducts.value = list
@@ -78,5 +86,4 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
             }
         }
     }
-
 }

@@ -21,31 +21,41 @@
         android:padding="@dimen/small_margin">
 
 
-        <ImageView
-            android:id="@+id/productImage"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/productImageCard"
             android:layout_width="0dp"
             android:layout_height="180dp"
-            android:background="@drawable/image_bg"
-            android:contentDescription="@string/product_image"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{product.image}"
+            android:backgroundTint="@color/primary"
+            android:padding="@dimen/default_margin"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/image_bg"
+                android:contentDescription="@string/product_image"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{product.image}" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/productTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_margin"
-            android:layout_marginTop="@dimen/small_margin"
             android:fontFamily="@font/poppins_semi_bold"
             android:lines="2"
             android:text="@{product.title}"
             android:textColor="@color/text_color"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/productImage"
-            app:layout_constraintTop_toTopOf="@+id/productImage"
+            app:layout_constraintStart_toEndOf="@+id/productImageCard"
+            app:layout_constraintTop_toTopOf="@id/productImageCard"
             tools:text="This is a sample" />
 
         <TextView
@@ -67,10 +77,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
             android:fontFamily="@font/poppins_semi_bold"
+            android:textSize="18sp"
             android:lines="1"
             android:onClick="@{() -> product.increaseQuantity()}"
-            android:textColor="@color/text_color"
-            app:layout_constraintStart_toEndOf="@+id/productImage"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintStart_toEndOf="@+id/productImageCard"
             app:layout_constraintStart_toStartOf="@+id/productPrice"
             app:layout_constraintTop_toBottomOf="@+id/productPrice"
             android:text="@string/add" />
@@ -82,6 +93,7 @@
             android:fontFamily="@font/poppins_regular"
             android:lines="1"
             android:text="@{product.asFormattedQuantity()}"
+            android:textSize="18sp"
             android:layout_marginStart="@dimen/small_margin"
             android:textColor="@color/text_color"
             app:layout_constraintStart_toEndOf="@+id/productQuantityAdd"
@@ -95,7 +107,8 @@
             android:fontFamily="@font/poppins_regular"
             android:lines="1"
             android:layout_marginStart="@dimen/small_margin"
-            android:textColor="@color/text_color"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/productQuantity"
             app:layout_constraintTop_toTopOf="@+id/productQuantityAdd"
             android:text="@string/subtract" />
@@ -105,15 +118,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/poppins_bold"
             android:text="@{product.asTotalPrice()}"
             android:textColor="@color/text_color"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/productImageCard"
             app:layout_constraintStart_toStartOf="@+id/productQuantityAdd"
             app:layout_constraintTop_toBottomOf="@+id/productQuantityAdd"
             tools:text="Total = $198" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/removeFromCart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -130,8 +145,30 @@
             android:text="Remove from Cart"
             android:textColor="@color/invert_text_color"
             app:drawableStartCompat="@drawable/baseline_shopping_cart_16"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/productTotal"
-            app:layout_constraintTop_toBottomOf="@+id/productTotal" />
+            app:layout_constraintTop_toBottomOf="@+id/productTotal" />-->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/removeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorPrimary"
+            android:onClick="@{() -> viewModel.removeFromCart(product)}"
+            app:cardCornerRadius="36dp"
+            app:layout_constraintBottom_toBottomOf="@+id/productTotal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/productTotal">
+
+            <ImageView
+                android:id="@+id/removeIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="@dimen/small_margin"
+                android:background="@drawable/baseline_delete_24"
+                android:contentDescription="Remove icon" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

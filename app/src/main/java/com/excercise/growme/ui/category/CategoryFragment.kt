@@ -97,6 +97,7 @@ class CategoryFragment : Fragment() {
                             defaultCategoryTags = categoriesViewModel.getCategoryTags(products)
                             refinedCategoryTags = categoriesViewModel.setDefinedTags(defaultCategoryTags)
                             selectedCategoryTag = defaultCategoryTags[0]
+                            mainCategoryList = getCategoryList()
 
                             val adapter = CategoryAdapter(mainCategoryList, object : OnCategoryClickListener {
                                 override fun onCategoryClicked(category: Category) {
@@ -104,7 +105,7 @@ class CategoryFragment : Fragment() {
                                     //
                                     if (selectedCategoryTag.isNotBlank()){
                                         findNavController().navigate(R.id.action_categoryFragment_to_productFragment, Bundle().apply {
-                                            putString("categoryTag", selectedCategoryTag)
+                                            putString(Constants.CATEGORY_TAG, selectedCategoryTag)
                                         })
                                     }
                                 }
@@ -123,28 +124,58 @@ class CategoryFragment : Fragment() {
     }
 
     private fun getCategoryList(): List<Category> {
-        return listOf(
-            Category(
-                title = "Men's clothing",
-                tag = "men's clothing",
-                imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_shopping_cart_16)!!
-            ),
-            Category(
-                title = "Women's clothing",
-                tag = "women's clothing",
-                imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_shopping_cart_16)!!
-            ),
-            Category(
-                title = "Jewelery",
-                tag = "jewelery",
-                imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_shopping_cart_16)!!
-            ),
-            Category(
-                title = "Electronics",
-                tag = "electronics",
-                imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_shopping_cart_16)!!
-            ),
-        )
+        if (mainCategoryList.size > 4){
+            return listOf(
+                Category(
+                    title = Constants.MENS_CLOTHING_CAP,
+                    tag = Constants.MENS_CLOTHING,
+                    imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_man_60)!!
+                ),
+                Category(
+                    title = Constants.WOMENS_CLOTHING_CAP,
+                    tag = Constants.WOMENS_CLOTHING,
+                    imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_woman_60)!!
+                ),
+                Category(
+                    title = Constants.JEWELERY_CAP,
+                    tag = Constants.JEWELERY,
+                    imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_auto_awesome_60)!!
+                ),
+                Category(
+                    title = Constants.ELECTRONICS_CAP,
+                    tag = Constants.ELECTRONICS,
+                    imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_devices_60)!!
+                ),
+                Category(
+                    title = Constants.OTHERS_CAP,
+                    tag = Constants.OTHERS,
+                    imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_category_60)!!
+                )
+            )
+        }else{
+            return listOf(
+                Category(
+                    title = Constants.MENS_CLOTHING_CAP,
+                    tag = Constants.MENS_CLOTHING,
+                    imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_man_60)!!
+                ),
+                Category(
+                    title = Constants.WOMENS_CLOTHING_CAP,
+                    tag = Constants.WOMENS_CLOTHING,
+                    imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_woman_60)!!
+                ),
+                Category(
+                    title = Constants.JEWELERY_CAP,
+                    tag = Constants.JEWELERY,
+                    imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_auto_awesome_60)!!
+                ),
+                Category(
+                    title = Constants.ELECTRONICS_CAP,
+                    tag = Constants.ELECTRONICS,
+                    imageId = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_devices_60)!!
+                )
+            )
+        }
     }
 
     private fun initialization(){

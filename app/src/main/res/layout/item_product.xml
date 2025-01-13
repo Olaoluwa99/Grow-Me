@@ -20,18 +20,27 @@
         android:background="@drawable/product_background"
         android:padding="@dimen/small_margin">
 
-        <ImageView
-            android:id="@+id/productImage"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/productImageCard"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/image_bg"
-            android:contentDescription="@string/product_image"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{product.image}"
+            android:padding="@dimen/default_margin"
+            app:cardCornerRadius="16dp"
             app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/image_bg"
+                android:contentDescription="@string/product_image"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{product.image}" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/ratingValue"
@@ -48,8 +57,8 @@
             android:text='@{String.valueOf(product.rating.rate)}'
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/baseline_star_rate_16"
-            app:layout_constraintBottom_toBottomOf="@+id/productImage"
-            app:layout_constraintEnd_toEndOf="@+id/productImage"
+            app:layout_constraintBottom_toBottomOf="@+id/productImageCard"
+            app:layout_constraintEnd_toEndOf="@+id/productImageCard"
             tools:text="4.2" />
 
         <TextView
@@ -61,7 +70,7 @@
             android:lines="2"
             android:text="@{product.title}"
             android:textColor="@color/text_color"
-            app:layout_constraintTop_toBottomOf="@+id/productImage"
+            app:layout_constraintTop_toBottomOf="@+id/productImageCard"
             tools:layout_editor_absoluteX="16dp"
             tools:text="This is a sample" />
 
@@ -91,7 +100,7 @@
             android:paddingVertical="4dp"
             android:text="Buy"
             android:ellipsize="end"
-            android:textColor="@color/invert_text_color"
+            android:textColor="?attr/colorOnPrimary"
             app:drawableStartCompat="@drawable/baseline_shopping_cart_16"
             app:layout_constraintBottom_toBottomOf="@+id/productPrice"
             app:layout_constraintEnd_toEndOf="parent"

@@ -46,6 +46,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="product_image">Product image</string>
-    <string name="subtract">-</string>
-    <string name="add">+</string>
+    <string name="subtract">  -</string>
+    <string name="add">+  </string>
 </resources>

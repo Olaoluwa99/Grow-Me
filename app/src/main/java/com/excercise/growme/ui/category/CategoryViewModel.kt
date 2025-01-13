@@ -73,11 +73,11 @@ class CategoryViewModel@Inject constructor(private val repository: ProductReposi
 
         for (item in tagList){
             when (item) {
-                "men's clothing" -> definedTags.add("Men's clothing")
-                "women's clothing" -> definedTags.add("Women's clothing")
-                "jewelery" -> definedTags.add("Jewelery")
-                "electronics" -> definedTags.add("Electronics")
-                else -> definedTags.add("Others")
+                Constants.MENS_CLOTHING -> definedTags.add(Constants.MENS_CLOTHING_CAP)
+                Constants.WOMENS_CLOTHING -> definedTags.add(Constants.WOMENS_CLOTHING_CAP)
+                Constants.JEWELERY -> definedTags.add(Constants.JEWELERY_CAP)
+                Constants.ELECTRONICS -> definedTags.add(Constants.ELECTRONICS)
+                else -> definedTags.add(Constants.OTHERS_CAP)
             }
         }
         return definedTags
