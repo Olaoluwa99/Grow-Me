@@ -68,6 +68,11 @@ class ProductFragment : Fragment() {
         recyclerView.addItemDecoration(SpacingItemDecorator(x)) //setting space between items in RecyclerView
 
         //
+        productsViewModel.fetchProducts()
+        productsViewModel.fetchCartProducts()
+        productsViewModel.refreshProducts()
+
+        //
         observeAllRetrievedProducts()
         setupRecyclerView()
         observeAddToCartStatus(view)

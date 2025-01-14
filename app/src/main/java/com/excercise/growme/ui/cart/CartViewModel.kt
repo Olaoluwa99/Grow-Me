@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.excercise.growme.constants.Constants
 import com.excercise.growme.data.CartProduct
 import com.excercise.growme.database.CartRepository
+import com.excercise.growme.model.decreaseQuantity
+import com.excercise.growme.model.increaseQuantity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -66,27 +68,11 @@ class CartViewModel @Inject constructor(private val repository: CartRepository) 
     }
 
     fun increaseItemQuantity(cartProduct: CartProduct){
-        val newCartProductList = mutableListOf<CartProduct>()
-        for(item in cartProducts.value){
-            if (item.id == cartProduct.id){
-                newCartProductList.add(cartProduct.copy(quantity = cartProduct.quantity+1))
-            }else newCartProductList.add(item)
-        }
-        _cartProducts.value = newCartProductList
+        _cartProducts.value = increaseQuantity(cartProducts.value, cartProduct)
     }
 
     fun decreaseItemQuantity(cartProduct: CartProduct){
-        val newCartProductList = mutableListOf<CartProduct>()
-        for(item in cartProducts.value){
-            if (item.id == cartProduct.id){
-                if (cartProduct.quantity > 1){
-                    newCartProductList.add(cartProduct.copy(quantity = cartProduct.quantity-1))
-                }else{
-                    newCartProductList.add(item)
-                }
-            }else newCartProductList.add(item)
-        }
-        _cartProducts.value = newCartProductList
+        _cartProducts.value = decreaseQuantity(cartProducts.value, cartProduct)
     }
 
     fun resetRemoveStatus() {

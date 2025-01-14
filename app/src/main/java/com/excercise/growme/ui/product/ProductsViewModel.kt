@@ -8,6 +8,7 @@ import com.excercise.growme.data.Product
 import com.excercise.growme.data.toCartProduct
 import com.excercise.growme.database.CartRepository
 import com.excercise.growme.database.ProductRepository
+import com.excercise.growme.model.setupProductsCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,13 +31,7 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
     private val _cartProducts = MutableStateFlow<List<CartProduct>>(emptyList())
     val cartProducts: StateFlow<List<CartProduct>> = _cartProducts
 
-    init {
-        fetchProducts()
-        fetchCartProducts()
-        refreshProducts()
-    }
-
-    private fun fetchProducts() {
+    fun fetchProducts() {
         viewModelScope.launch {
             try {
                 val data = repository.getProducts()
@@ -47,7 +42,7 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
         }
     }
 
-    private fun fetchCartProducts() {
+    fun fetchCartProducts() {
         viewModelScope.launch {
             try {
                 val data = cartRepository.getCartProducts()
@@ -58,7 +53,7 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
         }
     }
 
-    private fun refreshProducts() {
+    fun refreshProducts() {
         viewModelScope.launch {
             try {
                 repository.refreshProductsFromApi()
@@ -70,21 +65,7 @@ class ProductsViewModel@Inject constructor(private val repository: ProductReposi
     }
 
     fun setupProductsForCategory(tag: String){
-        val list = mutableListOf<Product>()
-        if (tag != Constants.OTHERS){
-            for (item in products.value){
-                if (item.category == tag){
-                    list.add(item)
-                }
-            }
-        }else{
-            for (item in products.value){
-                if (item.category != Constants.MENS_CLOTHING && item.category != Constants.WOMENS_CLOTHING && item.category != Constants.JEWELERY && item.category != Constants.ELECTRONICS){
-                    list.add(item)
-                }
-            }
-        }
-        _categoryProducts.value = list
+        _categoryProducts.value = setupProductsCategory(products.value, tag)
     }
 
     fun addToCart(product: Product){
