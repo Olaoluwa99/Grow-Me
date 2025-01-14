@@ -24,10 +24,10 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/productImageCard"
             android:layout_width="0dp"
-            android:layout_height="180dp"
+            android:layout_height="@dimen/cart_item_height"
             android:backgroundTint="@color/primary"
             android:padding="@dimen/default_margin"
-            app:cardCornerRadius="16dp"
+            app:cardCornerRadius="@dimen/cart_item_corner_radius"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
             android:fontFamily="@font/poppins_bold"
             android:text="@{product.asFormattedPrice()}"
             android:textColor="@color/text_color"
-            android:textSize="18sp"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="@+id/productTitle"
             app:layout_constraintTop_toBottomOf="@+id/productTitle"
             tools:text="$198" />
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semi_bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/medium_text_size"
             android:lines="1"
             android:onClick="@{() -> viewModel.increaseItemQuantity(product)}"
             android:textColor="?attr/colorPrimary"
@@ -92,7 +92,7 @@
             android:fontFamily="@font/poppins_regular"
             android:lines="1"
             android:text="@{product.asFormattedQuantity()}"
-            android:textSize="18sp"
+            android:textSize="@dimen/medium_text_size"
             android:layout_marginStart="@dimen/small_margin"
             android:textColor="@color/text_color"
             app:layout_constraintStart_toEndOf="@+id/productQuantitySubtract"
@@ -108,7 +108,7 @@
             android:layout_marginTop="@dimen/small_margin"
             android:onClick="@{() -> viewModel.decreaseItemQuantity(product)}"
             android:textColor="?attr/colorPrimary"
-            android:textSize="18sp"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toEndOf="@+id/productImageCard"
             app:layout_constraintStart_toStartOf="@+id/productPrice"
             app:layout_constraintTop_toBottomOf="@+id/productPrice"
@@ -119,11 +119,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/cart_item_margin_bottom"
             android:fontFamily="@font/poppins_bold"
             android:text="@{product.asTotalPrice()}"
             android:textColor="@color/text_color"
-            android:textSize="18sp"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintBottom_toBottomOf="@+id/productImageCard"
             app:layout_constraintStart_toStartOf="@+id/productQuantitySubtract"
             app:layout_constraintTop_toBottomOf="@+id/productQuantitySubtract"
@@ -135,18 +135,18 @@
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorPrimary"
             android:onClick="@{() -> viewModel.removeFromCart(product)}"
-            app:cardCornerRadius="6dp"
+            app:cardCornerRadius="@dimen/cart_item_remove_radius"
             app:layout_constraintBottom_toBottomOf="@+id/productTotal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/productTotal">
 
             <ImageView
                 android:id="@+id/removeIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/cart_item_remove_icon_size"
+                android:layout_height="@dimen/cart_item_remove_icon_size"
                 android:layout_margin="@dimen/small_margin"
                 android:background="@drawable/baseline_delete_24"
-                android:contentDescription="Remove icon" />
+                android:contentDescription="@string/icon" />
 
         </com.google.android.material.card.MaterialCardView>
 

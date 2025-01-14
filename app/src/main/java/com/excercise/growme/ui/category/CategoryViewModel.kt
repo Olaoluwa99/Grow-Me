@@ -15,35 +15,28 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoryViewModel@Inject constructor(private val repository: ProductRepository): ViewModel() {
 
-    private val _updateStatus = MutableStateFlow(Constants.INACTIVE)
-    var updateStatus = _updateStatus.asStateFlow()
-
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     val products: StateFlow<List<Product>> = _products
 
-    init {
-        fetchProducts()
-        refreshProducts()
-    }
-
-    private fun fetchProducts() {
+    fun fetchProducts() {
         viewModelScope.launch {
             try {
                 val data = repository.getProducts()
                 _products.value = data
             } catch (e: Exception) {
-                // Handle exception
+                println(e.message)
             }
         }
     }
 
-    private fun refreshProducts() {
+    fun refreshProducts() {
         viewModelScope.launch {
             try {
                 repository.refreshProductsFromApi()
                 _products.value = repository.getProducts()
             } catch (e: Exception) {
-                // Handle exception
+                println(e.message)
+                refreshProducts()
             }
         }
     }
@@ -53,34 +46,8 @@ class CategoryViewModel@Inject constructor(private val repository: ProductReposi
             try {
                 repository.assignProducts(products)
             } catch (e: Exception) {
-                // Handle exception
+                println(e.message)
             }
         }
     }
-
-    fun getCategoryTags(productsList: List<Product>): List<String> {
-        val categoryTags = mutableListOf<String>()
-        for (item in productsList) {
-            if (item.category !in categoryTags) {
-                categoryTags.add(item.category)
-            }
-        }
-        return categoryTags
-    }
-
-    fun setDefinedTags(tagList: List<String>): List<String> {
-        val definedTags = mutableListOf<String>()
-
-        for (item in tagList){
-            when (item) {
-                Constants.MENS_CLOTHING -> definedTags.add(Constants.MENS_CLOTHING_CAP)
-                Constants.WOMENS_CLOTHING -> definedTags.add(Constants.WOMENS_CLOTHING_CAP)
-                Constants.JEWELERY -> definedTags.add(Constants.JEWELERY_CAP)
-                Constants.ELECTRONICS -> definedTags.add(Constants.ELECTRONICS)
-                else -> definedTags.add(Constants.OTHERS_CAP)
-            }
-        }
-        return definedTags
-    }
-
 }

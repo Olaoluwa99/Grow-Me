@@ -1,5 +1,6 @@
 package com.excercise.growme.ui.category
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,7 +21,10 @@ import com.excercise.growme.R
 import com.excercise.growme.databinding.FragmentCategoryBinding
 import com.excercise.growme.constants.Constants
 import com.excercise.growme.data.Category
+import com.excercise.growme.databinding.DialogProgressBinding
 import com.excercise.growme.model.SpacingItemDecorator
+import com.excercise.growme.model.getCategoryTags
+import com.excercise.growme.model.setDefinedTags
 import com.excercise.growme.ui.product.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,18 +33,19 @@ import kotlinx.coroutines.launch
 class CategoryFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var loadingText: TextView
-    private lateinit var loadingProgress: ProgressBar
+    private lateinit var adapter: CategoryAdapter
 
     private var defaultCategoryTags = emptyList<String>()
     private var refinedCategoryTags = emptyList<String>()
     private var selectedCategoryTag = ""
 
+    private var _progressDialogBinding: DialogProgressBinding? = null
+    private val progressDialogBinding get() = _progressDialogBinding!!
+
+    private lateinit var progressDialog: AlertDialog
     private lateinit var recyclerView: RecyclerView
 
     private var mainCategoryList = listOf<Category>()
-
     private val categoriesViewModel: CategoryViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -55,68 +60,48 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initialization()
+        showProgressDialog("Setting up...\n\nEnsure you are connected to the internet for first time setup.")
         mainCategoryList = getCategoryList()
+        setupRecyclerView()
+        categoriesViewModel.fetchProducts()
+        categoriesViewModel.refreshProducts()
+        observeRetrievedProducts()
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                categoriesViewModel.updateStatus.collect { status ->
-                    when (status){
-                        Constants.INACTIVE -> {
-                            loadingProgress.visibility = View.GONE
-                            loadingText.visibility = View.GONE
-                        }
-                        Constants.LOADING -> {
-                            loadingProgress.visibility = View.VISIBLE
-                            loadingText.visibility = View.GONE
-                        }
-                        Constants.FAILURE -> {
-                            loadingProgress.visibility = View.GONE
-                            loadingText.visibility = View.VISIBLE
-                            loadingText.text = Constants.FAILURE
-                        }
-                        Constants.SUCCESS -> {
-                            loadingProgress.visibility = View.GONE
-                            loadingText.visibility = View.GONE
-                        }
-                    }
+    private fun setupRecyclerView(){
+        adapter = CategoryAdapter(mainCategoryList, object : OnCategoryClickListener {
+            override fun onCategoryClicked(category: Category) {
+                selectedCategoryTag = category.tag
+                //
+                if (selectedCategoryTag.isNotBlank()){
+                    findNavController().navigate(R.id.action_categoryFragment_to_productFragment, Bundle().apply {
+                        putString(Constants.CATEGORY_TAG, selectedCategoryTag)
+                    })
                 }
             }
-        }
+        })
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
+        recyclerView.adapter = adapter
 
+        val x = (resources.displayMetrics.density * 4).toInt()
+        recyclerView.addItemDecoration(SpacingItemDecorator(x))
+    }
+
+    private fun observeRetrievedProducts() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 categoriesViewModel.products.collect { products ->
-                    when (products.isEmpty()){
-                        false -> {
-                            println(products)
-                            //mainText.text = products.toString()
-
+                    when {
+                        products.isNotEmpty() -> {
                             //
                             categoriesViewModel.assignProducts(products)
-
-                            defaultCategoryTags = categoriesViewModel.getCategoryTags(products)
-                            refinedCategoryTags = categoriesViewModel.setDefinedTags(defaultCategoryTags)
-                            selectedCategoryTag = defaultCategoryTags[0]
+                            //
+                            defaultCategoryTags = getCategoryTags(products)
+                            refinedCategoryTags = setDefinedTags(defaultCategoryTags)
                             mainCategoryList = getCategoryList()
-
-                            val adapter = CategoryAdapter(mainCategoryList, object : OnCategoryClickListener {
-                                override fun onCategoryClicked(category: Category) {
-                                    selectedCategoryTag = category.tag
-                                    //
-                                    if (selectedCategoryTag.isNotBlank()){
-                                        findNavController().navigate(R.id.action_categoryFragment_to_productFragment, Bundle().apply {
-                                            putString(Constants.CATEGORY_TAG, selectedCategoryTag)
-                                        })
-                                    }
-                                }
-                            })
-                            recyclerView.layoutManager = GridLayoutManager(context, 2)
-                            recyclerView.adapter = adapter
-
-                            val x = (resources.displayMetrics.density * 4).toInt()
-                            recyclerView.addItemDecoration(SpacingItemDecorator(x))
+                            adapter.updateList(mainCategoryList)
+                            dismissProgressDialog()
                         }
-                        true -> {}//mainText.text = "---"
                     }
                 }
             }
@@ -179,14 +164,33 @@ class CategoryFragment : Fragment() {
     }
 
     private fun initialization(){
-        loadingText = binding.progressText
-        loadingProgress = binding.progressBar
-
         recyclerView = binding.recyclerView
+    }
+
+    private fun showProgressDialog(message: String) {
+        _progressDialogBinding = DialogProgressBinding.inflate(layoutInflater)
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(progressDialogBinding.root)
+        builder.setCancelable(false)
+
+        //
+        progressDialogBinding.progressText.text = message
+
+        progressDialog = builder.create()
+        progressDialog.show()
+    }
+
+    private fun dismissProgressDialog() {
+        if (::progressDialog.isInitialized && progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        dismissProgressDialog()
         _binding = null
+        _progressDialogBinding = null
     }
 }

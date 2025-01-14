@@ -45,9 +45,6 @@ class CategoryAdapter(
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         categories = newCategory
         diffResult.dispatchUpdatesTo(this)
-
-        // Force rebind if necessary (use sparingly)
-        notifyDataSetChanged()
     }
 }
 
