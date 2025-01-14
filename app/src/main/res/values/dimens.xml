@@ -27,4 +27,5 @@
 
     <dimen name="progress_dialog_padding">20dp</dimen>
     <dimen name="progress_dialog_text_spacing">10dp</dimen>
+    <dimen name="recycler_view_padding">80dp</dimen>
 </resources>

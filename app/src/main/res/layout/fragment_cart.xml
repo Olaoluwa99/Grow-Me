@@ -21,6 +21,8 @@
                 tools:itemCount="3"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:spanCount="1"
+                android:paddingBottom="@dimen/recycler_view_padding"
+                android:clipToPadding="false"
                 tools:listitem="@layout/item_cart"
                 />
 
